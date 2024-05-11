@@ -55,19 +55,18 @@ app.put('/api/leads/:lead_id', (req, res, next) => {
 });
 
 app.get('/api/leads/:lead_id/potential-duplicates', (req, res, next) => {
-    const lead = leads.find(lead => lead.lead_id === req.params.lead_id);
+    const [lead] = leads
+        .filter(lead => lead.lead_id === req.params.lead_id);
 
-    if (!lead) {
+    if (introduceChaos(res)) { return; }
+
+    if (lead) {
+        return res.status(200).json(lead.potential_duplicates);
+    } else {
         return res.status(404).json({ error: `lead_id ${req.params.lead_id} not found` });
     }
+})
 
-    if (!lead.potential_duplicates || lead.potential_duplicates.length === 0) {
-        return res.status(200).json([]); // Return an empty array if no potential duplicates
-    }
-
-    const potentialDuplicates = leads.filter(l => lead.potential_duplicates.includes(l.lead_id));
-    return res.status(200).json(potentialDuplicates);
-});
 
 app.listen(PORT, () => {
     console.log(`Autovance Leads API is listening on port ${PORT}`);

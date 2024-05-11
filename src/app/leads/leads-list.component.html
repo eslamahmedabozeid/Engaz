@@ -2,7 +2,6 @@
     <h2>{{ lead.first_name }} {{ lead.last_name }}</h2>
     <ul *ngIf="lead.potential_duplicates && lead.potential_duplicates.length > 0">
         <li *ngFor="let duplicate of lead.potential_duplicates">
-            {{ duplicate }}
             <button (click)="markAsActualDuplicate(lead.lead_id, duplicate)">Mark as Actual Duplicate</button>
         </li>
     </ul>
