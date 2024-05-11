@@ -10,6 +10,8 @@ app.use(bodyParser.json())
     .use(cors())
     .options('*', cors());
 
+console.log(__dirname);
+
 let leads = leads_data;
 let PORT = process.env.PORT || 3000;
 
@@ -23,14 +25,13 @@ function introduceChaos(res) {
     }
 }
 
-app.get('/', (req, res) => {
-    res.send('Autovance Leads API is running.'); // Response for root URL
-});
-
 app.get('/api/leads', (req, res, next) => {
     if (introduceChaos(res)) { return; }
 
-    return res.status(200).json(leads);
+    const leads_without_potential_duplicates = leads
+        .map(({ potential_duplicates, ...lead }) => lead);
+
+    return res.status(200).json(leads_without_potential_duplicates);
 });
 
 app.put('/api/leads/:lead_id', (req, res, next) => {
@@ -66,7 +67,6 @@ app.get('/api/leads/:lead_id/potential-duplicates', (req, res, next) => {
         return res.status(404).json({ error: `lead_id ${req.params.lead_id} not found` });
     }
 })
-
 
 app.listen(PORT, () => {
     console.log(`Autovance Leads API is listening on port ${PORT}`);

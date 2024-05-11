@@ -30,6 +30,7 @@ export class LeadsListComponent implements OnInit {
     this.leadsService.markDuplicateAsActual(leadId, duplicateId).subscribe(
         (res) => {
            console.log(res)
+           this.ngOnInit()
         },
         (error) => {
           console.log(error)  

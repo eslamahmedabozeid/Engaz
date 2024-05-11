@@ -17,6 +17,10 @@ export class LeadsService {
     getLeads(): Observable<Lead[]> {
         return this.http.get<Lead[]>(this.apiUrl);
     }
+    getPotentialDuplicates(leadId: string): Observable<any> {
+      return this.http.get(this.apiUrl + `${leadId}/potential-duplicates`);
+  }
+
 
     markDuplicateAsActual(leadId: string, duplicateId: string): Observable<any> {
       const url = `${this.apiUrl}/${leadId}`;
