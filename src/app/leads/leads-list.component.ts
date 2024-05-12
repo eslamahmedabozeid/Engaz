@@ -19,12 +19,19 @@ import { LeadsService } from './leads.service';
 
 export class LeadsListComponent implements OnInit {
   leads$!: Observable<Lead[]>;
-
+  duplicates:any
   constructor(private leadsService: LeadsService) { }
 
   ngOnInit(): void {
       this.leads$ = this.leadsService.getLeads();
   }
+
+  loadPotentialDuplicates(leadId: string): void {
+    this.leadsService.getPotentialDuplicates(leadId).subscribe((duplicates) => {
+      this.duplicates = duplicates
+    });
+  }
+
 
   markAsActualDuplicate(leadId: string, duplicateId: string) {
     this.leadsService.markDuplicateAsActual(leadId, duplicateId).subscribe(

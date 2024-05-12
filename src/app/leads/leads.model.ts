@@ -8,4 +8,6 @@ potential_duplicates: any;
   email: string;
   cell_phone: string;
   home_phone: string;
+  duplicates:any
+
 }

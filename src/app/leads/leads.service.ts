@@ -18,7 +18,7 @@ export class LeadsService {
         return this.http.get<Lead[]>(this.apiUrl);
     }
     getPotentialDuplicates(leadId: string): Observable<any> {
-      return this.http.get(this.apiUrl + `${leadId}/potential-duplicates`);
+      return this.http.get(this.apiUrl + `/${leadId}/potential-duplicates`);
   }
 
 
