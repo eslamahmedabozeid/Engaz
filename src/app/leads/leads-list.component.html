@@ -1,7 +1,8 @@
-<div *ngFor="let lead of leads$ | async">
+<div *ngFor="let lead of leads$ | async ; let i = index">
     <h2>{{ lead.first_name }} {{ lead.last_name }}</h2>
-    <ul *ngIf="lead.potential_duplicates && lead.potential_duplicates.length > 0">
-        <li *ngFor="let duplicate of lead.potential_duplicates">
+    <button (click)="loadPotentialDuplicates(lead.lead_id)">Load Potential Duplicates</button>
+    <ul>
+        <li *ngFor="let duplicate of duplicatesMap[lead.lead_id]">
             {{ duplicate }}
             <button (click)="markAsActualDuplicate(lead.lead_id, duplicate)">Mark as Actual Duplicate</button>
         </li>

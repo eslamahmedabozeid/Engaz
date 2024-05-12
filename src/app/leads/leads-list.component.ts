@@ -19,9 +19,10 @@ export class LeadsListComponent implements OnInit {
       this.leads$ = this.leadsService.getLeads();
   }
 
+  duplicatesMap: { [key: string]: any[] } = {};
   loadPotentialDuplicates(leadId: string): void {
     this.leadsService.getPotentialDuplicates(leadId).subscribe((duplicates) => {
-      this.duplicates = duplicates;
+      this.duplicatesMap[leadId] = duplicates;
     });
   }
   
