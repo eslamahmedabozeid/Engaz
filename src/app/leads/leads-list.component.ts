@@ -1,10 +1,3 @@
-// import { Component } from '@angular/core';
-// import { Store } from '@ngrx/store';
-// import { Observable } from 'rxjs';
-// import { LeadsActions } from './leads.actions';
-// import { Lead } from './leads.model';
-// import { LeadsSelectors } from './leads.selectors';
-
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Lead } from './leads.model';
@@ -28,10 +21,10 @@ export class LeadsListComponent implements OnInit {
 
   loadPotentialDuplicates(leadId: string): void {
     this.leadsService.getPotentialDuplicates(leadId).subscribe((duplicates) => {
-      this.duplicates = duplicates
+      this.duplicates = duplicates;
     });
   }
-
+  
 
   markAsActualDuplicate(leadId: string, duplicateId: string) {
     this.leadsService.markDuplicateAsActual(leadId, duplicateId).subscribe(
