@@ -56,15 +56,12 @@ export class LeadsListComponent implements OnInit {
   }
   
 
-  markAsActualDuplicate(leadId: string, duplicateId: string) {
-    this.leadsService.markDuplicateAsActual(leadId, duplicateId).subscribe(
-        (res) => {
-           console.log(res)
-           this.ngOnInit()
-        },
-        (error) => {
-          console.log(error)  
-        }
+  markAsActualDuplicate(lead: Lead) {
+    const { lead_id, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone } = lead;
+    this.leadsService.markDuplicateAsActual(lead_id, lead_id, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone).subscribe(
+        () => this.ngOnInit(),
+        (error) => console.error('Error marking as actual duplicate:', error)
     );
 }
+
 }

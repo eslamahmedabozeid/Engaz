@@ -22,9 +22,10 @@ export class LeadsService {
   }
 
 
-    markDuplicateAsActual(leadId: string, duplicateId: string): Observable<any> {
-      const url = `${this.apiUrl}/${leadId}`;
-      return this.http.put(url, { lead_id: duplicateId });
-  }
+  markDuplicateAsActual(leadId: string, duplicateId: string, duplicate_of: string, source: string, first_name: string, last_name: string, email: string, cell_phone: string, home_phone: string): Observable<any> {
+    const url = `${this.apiUrl}/${leadId}`;
+    return this.http.put(url, { lead_id: duplicateId, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone });
+}
+
   
 }
