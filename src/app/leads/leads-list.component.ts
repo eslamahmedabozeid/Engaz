@@ -1,6 +1,6 @@
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { Lead } from './leads.model';
 import { LeadsService } from './leads.service';
 
@@ -24,7 +24,6 @@ export class LeadsListComponent implements OnInit {
   loadLeads(): void {
     this.leadsService.getLeads().subscribe((leads) => {
       this.leads = leads;
-      console.log(this.leads);
   
       // Use Set to store the lead_ids encountered so far
       const leadIdsSet = new Set<string>();
@@ -52,6 +51,7 @@ export class LeadsListComponent implements OnInit {
   loadPotentialDuplicates(leadId: string): void {
     this.leadsService.getPotentialDuplicates(leadId).subscribe((duplicates) => {
       this.duplicatesMap[leadId] = duplicates;
+      
     });
   }
   
@@ -59,8 +59,9 @@ export class LeadsListComponent implements OnInit {
   markAsActualDuplicate(lead: Lead) {
     const { lead_id, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone } = lead;
     this.leadsService.markDuplicateAsActual(lead_id, lead_id, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone).subscribe(
-        () => this.ngOnInit(),
-        (error) => console.error('Error marking as actual duplicate:', error)
+        () =>{
+          this.ngOnInit()
+        },(error) => console.error('Error marking as actual duplicate:', error)
     );
 }
 
