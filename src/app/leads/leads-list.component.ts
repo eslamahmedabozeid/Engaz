@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { empty, Observable } from 'rxjs';
 import { Lead } from './leads.model';
 import { LeadsService } from './leads.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { LeadsService } from './leads.service';
 export class LeadsListComponent implements OnInit {
   leads$!: Observable<Lead[]>;
   leads:any
-  constructor(private leadsService: LeadsService) { }
+  constructor(private leadsService: LeadsService,private toastr: ToastrService) { }
 
   ngOnInit(): void {
       this.leads$ = this.leadsService.getLeads();
@@ -55,14 +56,28 @@ export class LeadsListComponent implements OnInit {
     });
   }
   
+  selectedMarkIndex: number = -1; 
 
   markAsActualDuplicate(lead: Lead) {
+   
+  if (this.selectedMarkIndex === -1) {
+    this.toastr.warning('Please mark the lead first.');
+    return;
+}
     const { lead_id, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone } = lead;
     this.leadsService.markDuplicateAsActual(lead_id, lead_id, duplicate_of, source, first_name, last_name, email, cell_phone, home_phone).subscribe(
         () =>{
+          this.toastr.success('success');
           this.ngOnInit()
         },(error) => console.error('Error marking as actual duplicate:', error)
     );
 }
 
+toggleMark(index: number) {
+  if (this.selectedMarkIndex === index) {
+      this.selectedMarkIndex = -1; 
+  } else {
+      this.selectedMarkIndex = index;
+  }
+}
 }

@@ -2,9 +2,10 @@
     <h2>{{ lead.first_name }} {{ lead.last_name }}</h2>
     <button (click)="loadPotentialDuplicates(lead.lead_id)">Load Potential Duplicates</button>
     <ul>
-        <li *ngFor="let duplicate of duplicatesMap[lead.lead_id]">
-            {{ duplicate }}
-            <button (click)="markAsActualDuplicate(lead)">Mark as Actual Duplicate</button>
+        <li *ngFor="let duplicate of duplicatesMap[lead.lead_id] ; let i = index">
+            <span *ngIf="i === selectedMarkIndex">✓</span> {{ duplicate }}
+            <button (click)="markAsActualDuplicate(lead)">update a lead</button>
+            <button (click)="toggleMark(i)">Toggle Mark</button>
         </li>
     </ul>
     <hr>

@@ -1,4 +1,5 @@
 export interface Lead {
+marked: boolean;
   lead_id: string;
   duplicate_of: string | any;
   source: string;
