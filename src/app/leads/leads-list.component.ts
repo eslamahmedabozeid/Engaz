@@ -47,7 +47,7 @@ export class LeadsListComponent implements OnInit {
     });
   }
   
-
+  // Get All LoadPotentialDuplicates
   duplicatesMap: { [key: string]: any[] } = {};
   loadPotentialDuplicates(leadId: string): void {
     this.leadsService.getPotentialDuplicates(leadId).subscribe((duplicates) => {
@@ -58,6 +58,7 @@ export class LeadsListComponent implements OnInit {
   
   selectedMarkIndex: number = -1; 
 
+  // Send Put Interface
   markAsActualDuplicate(lead: Lead) {
    
   if (this.selectedMarkIndex === -1) {
@@ -72,7 +73,7 @@ export class LeadsListComponent implements OnInit {
         },(error) => console.error('Error marking as actual duplicate:', error)
     );
 }
-
+// Mark Button
 toggleMark(index: number) {
   if (this.selectedMarkIndex === index) {
       this.selectedMarkIndex = -1; 
@@ -80,4 +81,6 @@ toggleMark(index: number) {
       this.selectedMarkIndex = index;
   }
 }
+
+
 }
